@@ -3,6 +3,17 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { index } from "../../Schema";
 import axios from "axios";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+} from "@chakra-ui/react";
 
 const Products = () => {
   const [products1, setProducts1] = useState([]);
@@ -14,14 +25,14 @@ const Products = () => {
   const postData = async () => {
     const values = getValues();
     console.log(values);
-    await axios.post("https://northwind.vercel.app/api/categories", {
+    await axios.post("http://localhost:5050/users", {
       name: values.name,
       price: values.unitPrice,
     });
   };
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get("https://northwind.vercel.app/api/categories");
+      const res = await axios.get("http://localhost:5050/users");
       setProducts1(res.data);
     };
     getData();
@@ -42,10 +53,24 @@ const Products = () => {
       </form>
       {products1 &&
         products1.map((d) => (
-          <>
-            <h1>{d.name}</h1>
-            <p>{d.unitPrice}</p>
-          </>
+          <TableContainer>
+            <Table size="sm">
+              <Thead>
+                <Tr>
+                  <Th>Name</Th>
+                  <Th>Id</Th>
+                  <Th>Password</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                <Tr>
+                  <Td>{d.username}</Td>
+                  <Td>{d._id}</Td>
+                  <Td>{d.password}</Td>
+                </Tr>
+              </Tbody>
+            </Table>
+          </TableContainer>
         ))}
     </div>
   );
