@@ -9,18 +9,22 @@ import {
     TableCaption,
     TableContainer,
 } from '@chakra-ui/react'
+import axios from 'axios'
 
 const ProductsTable = () => {
 
     const [products, setProducts] = useState([])
 
     const getData = async () => {
-        const res = ("https://northwind.vercel.app/api/products");
+        const res =await axios.get("https://northwind.vercel.app/api/products");
         setProducts(res.data)
     }
     useEffect(() => {
         getData()
     })
+
+    const productsUpdate =
+        products.sort((a,b) => (a.id-b.id))
     return (
 
         <TableContainer>
@@ -30,15 +34,15 @@ const ProductsTable = () => {
                     <Tr>
                         <Th>ID</Th>
                         <Th>Name</Th>
-                        <Th>Uit</Th>
+                        <Th>Unit Price</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {products.map(product => (
+                    {productsUpdate.map(product => (
                         <Tr>
                             <Td>{product.id}</Td>
                             <Td>{product.name}</Td>
-                            <Td >{product.unitprice}</Td>
+                            <Td >{product.unitPrice}</Td>
                         </Tr>
                     ))}
 
