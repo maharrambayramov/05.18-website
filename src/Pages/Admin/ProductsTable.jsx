@@ -12,21 +12,19 @@ import {
 import axios from 'axios'
 
 const ProductsTable = () => {
-
     const [products, setProducts] = useState([])
 
-    const getData = async () => {
-        const res =await axios.get("https://northwind.vercel.app/api/products");
-        setProducts(res.data)
-    }
     useEffect(() => {
+        const getData = async () => {
+            const res =await axios.get("https://northwind.vercel.app/api/categories");
+            setProducts(res.data)
+        }
         getData()
     })
 
     const productsUpdate =
         products.sort((a,b) => (a.id-b.id))
     return (
-
         <TableContainer>
             <Table variant='simple'>
                 <TableCaption>Imperial to metric conversion factors</TableCaption>
@@ -38,7 +36,7 @@ const ProductsTable = () => {
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {productsUpdate.map(product => (
+                    {productsUpdate&&productsUpdate.map(product => (
                         <Tr>
                             <Td>{product.id}</Td>
                             <Td>{product.name}</Td>
